@@ -105,8 +105,8 @@ wp_reset_postdata();
                 <div class="professor-likes d-flex justify-content-end" data-like='<?php if($currentUserLike) if($currentUserLike->posts) echo $currentUserLike->posts[0]->ID; ?>' data-exist=<?php echo $existLike ?> data-professor=<?php the_ID(); ?>>
                     <div class="like-area px-3 py-2" role='button'>
                         <span class="like-btn">
-                            <i class="fa <?php if($existLike== 'no') echo 'fa-heart-o';
-                             else echo 'fa-heart'; ?> text-danger"></i> 
+                            <i class="<?php if($existLike== 'no') echo 'fa-regular fa-heart';
+                             else echo 'fa-solid fa-heart'; ?> text-danger"></i> 
                         </span>
                         <span class="likes-count text-danger"><?php echo $professorLikes->found_posts ?></span>
                     </div>

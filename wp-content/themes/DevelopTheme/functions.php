@@ -1,8 +1,7 @@
-<?php if ( !defined( 'ABSPATH' ) ) exit; ?>
 
 <?php
-require WP_CONTENT_DIR . '/themes/DevelopTheme/inc/search_route.php';
-require WP_CONTENT_DIR . '/themes/DevelopTheme/inc/likes_route.php';
+require get_theme_file_path('inc/search_route.php');
+require get_theme_file_path('inc/likes_route.php');
 
 function pageBanner($title, $subtitle, $photo) {
     
@@ -81,6 +80,7 @@ function ataStyles() {
     wp_enqueue_style('atafontawesome',get_template_directory_uri().'/assets/fontawesome-css/fontawesome.min.css');
     wp_enqueue_style('atafontawesomebrand',get_template_directory_uri().'/assets/fontawesome-css/brands.min.css');
     wp_enqueue_style('atafontawesomesolid',get_template_directory_uri().'/assets/fontawesome-css/solid.min.css');
+    wp_enqueue_style('atafontawesomeregular',get_template_directory_uri().'/assets/fontawesome-css/regular.min.css');
     wp_enqueue_style('atabootstrap',get_template_directory_uri().'/assets/bootstrap/bootstrap.min.css');
     wp_enqueue_style('mainStyles',get_template_directory_uri().'/style.css');
     wp_enqueue_script('mainScripts', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
