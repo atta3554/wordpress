@@ -1,0 +1,24 @@
+{
+  "name": "Developtheme",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider wp-scripts start",
+    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider wp-scripts start",
+    "devFast": "wp-scripts start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "ata ashrafi",
+  "license": "ISC",
+  "dependencies": {
+    "@glidejs/glide": "^3.4.1",
+    "@wordpress/scripts": "*",
+    "axios": "^0.21.1",
+    "cross-env": "^7.0.3",
+    "normalize.css": "^8.0.1"
+  }
+}
+

@@ -1,0 +1,352 @@
+/* 
+Theme Name: ata Theme
+author: sed ata ghor kele
+*/
+
+
+
+
+/* General styles */
+@keyframes spinner {
+    0%{
+        transform: rotate(0deg);
+    }
+
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.inset-0{
+    inset: 0;
+}
+
+.z-index-1{
+    z-index: 10;
+}
+
+.z-index-2{
+    z-index: 20;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    transition: color .1s ease-in-out;
+}
+
+a:hover{
+    color: yellow;
+}
+
+.post-overlay{
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0,0,0,.6);
+}
+/* General styles */
+
+
+
+
+/* Login Page */
+body.login div#login h1 a{
+    background-image: url('assets/Logo.png');
+    background-size: 200px;
+    width: 200px;
+}
+/* Login Page */
+
+
+
+
+/* header */
+
+header #menu-primary li:hover a{
+    color: yellow;
+}
+
+header #menu-primary li.current-menu-item a{
+    color: yellow;
+}
+
+header .login{
+    background-color: red;
+}
+
+header .register{
+    background-color: orange;
+}
+
+header .user-avatar img{
+    border-radius: .25em 0 0 .25em;
+}
+/* header */
+
+
+
+
+/* Hero Section */
+.banner-section{
+    background: url('./assets/h-62.webp');
+    height: 400px;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+}
+
+.banner-section .cover{
+    background-color: rgba(0,0,0,.6);
+}
+/* Hero Section */
+
+
+
+
+/* front-page posts */
+.most-post-types .post-time{
+    width: 85px;
+    height: 85px;
+}
+/* front-page posts */
+
+
+
+
+/* Parent Pages Box */
+.parent-pages-box h3{
+    background-color: blueviolet;
+}
+
+.parent-pages-box li , .parent-pages-box h3{
+    border-bottom: 1px solid black;
+    padding: 10px 10px;
+    list-style: none;
+    text-align: center;
+}
+
+.parent-pages-box h3 a , .parent-pages-box li a{
+    transition: color .1s ease-in-out;
+}
+
+.parent-pages-box h3 a:hover , .parent-pages-box li a:hover{
+    color: yellow !important;
+}
+
+.parent-pages-box li:last-child{
+    border: none;
+}
+
+.parent-pages-box li a{
+    color: white;
+}
+/* Parent Pages Box */
+
+
+
+
+/* Single Child Box */
+.single-child-box{
+    height: 50px;
+    margin-top: -50px;
+}
+/* Single Child Box */
+
+
+
+
+/* Blog page */
+.post-container .post-title a ,  .post-container .post-meta .post-author a{
+    color: black ;
+}
+
+.post-container .post-meta .post-author a{
+    text-decoration: underline;
+}
+
+.post-container .post-title a:hover  , .post-container .post-meta .post-author a:hover , .post-pagination a.page-numbers:hover , .single-child-box .post-author a:hover{
+    color: yellow;
+}
+
+.post-pagination .page-numbers{
+    color: black;
+    margin: 0 10px;
+}
+/* Blog page */
+
+
+
+
+/* Single Post */
+a.current-post{
+    color: yellow;
+}
+
+.single-child-box .post-author a{
+    color: black;
+    line-height: 10px;
+    text-decoration: underline !important;
+}
+/* Single Post */
+
+
+
+
+/* Seminars */
+.seminar-informations{
+    top: 100px;
+}
+
+.seminar-informations .seminar-professor-informations .seminar-professor-image{
+    transition: all .3s ease-in-out;
+}
+
+.seminar-informations .seminar-professor-informations .seminar-professor-image:hover{
+    filter: blur(1px);
+    transform:  rotate(-30deg) scale(1.2);
+}
+
+.seminar-informations .position-relative:nth-child(odd) .seminar-professor-image:hover{
+    filter: blur(1px);
+    transform:  rotate(30deg) scale(1.2) ;
+}
+
+.seminar-informations .seminar-professor-informations .seminar-professor-title{
+    transition: background .3s ease-in-out;
+}
+
+.seminar-informations .seminar-professor-informations:hover .seminar-professor-title{
+    background-color: #ffc107;
+}
+/* Seminars */
+
+
+
+
+
+/* Search Overlay */
+.fa-window-close{
+    cursor: pointer;
+}
+
+.search-overlay{
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease-in-out;
+}
+
+.search-overlay.active{
+    opacity: 1;
+    pointer-events: all;
+}
+
+.search-spinner{
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    border: 5px solid lightgray;
+    border-left-color: black;
+    animation: spinner 1s infinite linear both;
+}
+
+.result-title a:nth-child(2){
+    background-color: #cecece;
+    padding: 0px 10px 2px;
+}
+
+/* Search Overlay */
+
+
+
+/* Professors */
+.professor-container{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 40vh;
+}
+
+.like-area{
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    transition: background .1s linear;
+}
+
+.like-area:hover{
+    background-color: #d5d5d5;
+}
+/* Professors */
+
+
+/* Notes */
+.note-box{
+    transition: width .8s ease-in-out, padding .8s ease-in-out, opacity .5s ease-in-out, margin .8s ease-in-out;
+    text-wrap: nowrap;
+}
+
+.note-box .note-body, .new-note-box .note-body{
+    height: 300px;
+    border: none;
+    outline: none;
+    resize: none;
+}
+
+.note-box .note-title, .new-note-box .note-title{
+    border: none;
+    outline: none;
+}
+
+.note-title.active, .note-body.active{
+    border: 1px solid rgba(0,0,0,.6);
+    outline: auto;
+}
+
+.cancel-note, .error-message{
+    display: none;
+}
+
+.cancel-note.active, .error-message.active{
+    display: block;
+}
+
+.new-note-box{
+    background-color: rgb(205, 205, 205);
+}
+
+.note-box.hide{
+    width: 0px !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    opacity: 0 !important;
+}
+
+.delete-note__alert-container{
+    position: fixed;
+    inset: 35%;
+    display: none;
+}
+
+.delete-note__alert-container.active{
+    display: block;
+}
+
+.delete-note__alert-bg{
+    padding: 25px 10px;
+    background-color: #ff2323;
+    opacity: 0;
+    transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+}
+
+.delete-note__alert-bg.active{
+    opacity: 1;
+    transform: translateY(20px);
+}
+
+.delete-note__alert-content{
+    color: white;
+}
+.delete-note__alert-content.active{
+    display: block;
+}
+/* Notes */
