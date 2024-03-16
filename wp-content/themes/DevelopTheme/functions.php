@@ -1,6 +1,8 @@
+<?php if ( !defined( 'ABSPATH' ) ) exit; ?>
+
 <?php
-require get_theme_file_path('inc/search_route.php');
-require get_theme_file_path('inc/likes_route.php');
+require WP_CONTENT_DIR . '/themes/DevelopTheme/inc/search_route.php';
+require WP_CONTENT_DIR . '/themes/DevelopTheme/inc/likes_route.php';
 
 function pageBanner($title, $subtitle, $photo) {
     
