@@ -486,7 +486,8 @@ class Like {
         +this.likeicon.parentElement.nextElementSibling.innerHTML++;
         this.likeicon.parentElement.parentElement.parentElement.setAttribute('data-exist', 'yes');
         this.likeicon.parentElement.parentElement.parentElement.setAttribute('data-like', data);
-        this.likeicon.className = 'fa fa-heart text-danger';
+        this.likeicon.classList.remove('fa-regular');
+        this.likeicon.classList.add('fa-solid');
       } else if (data === 'invalid professor id') {
         alert('you are trying to manipulate my website! I will kill you😈');
       } else {
@@ -509,7 +510,8 @@ class Like {
       +this.likeicon.parentElement.nextElementSibling.innerHTML--;
       this.likeicon.parentElement.parentElement.parentElement.setAttribute('data-exist', 'no');
       this.likeicon.parentElement.parentElement.parentElement.removeAttribute('data-like');
-      this.likeicon.className = 'fa fa-heart-o text-danger';
+      this.likeicon.classList.remove('fa-solid');
+      this.likeicon.classList.add('fa-regular');
     }).catch(err => console.log(err));
   }
 }
