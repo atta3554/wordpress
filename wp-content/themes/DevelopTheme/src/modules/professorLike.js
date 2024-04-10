@@ -94,7 +94,7 @@ class Like{
             this.likeicon.parentElement.parentElement.parentElement.setAttribute('data-exist', 'no')
             this.likeicon.parentElement.parentElement.parentElement.removeAttribute('data-like')
             this.likeicon.classList.remove('fa-solid')
-            this.likeicon.classList.add('fa-regular')
+            this.likeicon.classList.add('   fa-regular')
         })
         .catch(err=> console.log(err))
     }

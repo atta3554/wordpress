@@ -1,4 +1,4 @@
-<div class="col-3 my-4 mx-4">
+<div class="col-lg-3 col-sm-6 col-12 my-4 mx-4">
     <div class="post-container p-4 border rounded">
         <h3 class="post-title"><a href="<?php the_permalink() ?>"><?php the_title() ?></a></h3>
         <div class="post-tags my-3 d-flex justify-content-between">

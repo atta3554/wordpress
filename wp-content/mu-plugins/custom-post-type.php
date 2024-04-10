@@ -100,6 +100,7 @@ function themePostTypes() {
         ),
         'menu_icon'=>'dashicons-heart'
     ));
+
 }
 
 add_action('init' , 'themePostTypes');

@@ -1,4 +1,4 @@
-<div class="col-3 my-4 mx-4">
+<div class="col-9 col-sm-6 col-lg-3 my-4 ">
     <div class="post-container p-4">
         <h3 class="post-title"><a href="<?php the_permalink() ?>"><?php the_title() ?></a></h3>
         <div class="post-thumbnail my-3"><img class='w-100 h-100' src="<?php the_post_thumbnail_url('medium_large'); ?>" alt="thumbnail"></div>                        

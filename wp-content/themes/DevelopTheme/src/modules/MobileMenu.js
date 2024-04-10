@@ -1,7 +1,8 @@
 class MobileMenu {
   constructor() {
-    this.menu = document.querySelector(".site-header__menu")
-    this.openButton = document.querySelector(".site-header__menu-trigger")
+    console.log('selam');
+    this.menu = document.querySelector(".nav-container")
+    this.openButton = document.querySelector(".humburgur-menu i")
     this.events()
   }
 
@@ -12,7 +13,7 @@ class MobileMenu {
   openMenu() {
     this.openButton.classList.toggle("fa-bars")
     this.openButton.classList.toggle("fa-window-close")
-    this.menu.classList.toggle("site-header__menu--active")
+    this.menu.classList.toggle("active")
   }
 }
 

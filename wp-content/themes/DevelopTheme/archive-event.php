@@ -3,7 +3,7 @@
 
 <div class="container rounded my-5 main py-5">
     <?php while(have_posts()) : ?>
-        <div class="row border rounded my-5 p-4">
+        <div class="row border rounded justify-content-center my-5 p-4">
             <?php 
             the_post(); 
             get_template_part('template-part/content', get_post_type());
