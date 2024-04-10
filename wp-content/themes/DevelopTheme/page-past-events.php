@@ -20,12 +20,19 @@ $pastEvents = new WP_Query(array(
 )); 
 ?>
 
-<div class="container rounded my-5 main py-5">
-    <?php while($pastEvents->have_posts()) {
-        $pastEvents->the_post();
-        get_template_part('template-part/content', get_post_type());
-    } ?>
-    
+<div class="container rounded my-5 main py-5 d-flex">
+    <div class="swiper">
+        <div class="swiper-wrapper mb-0 mb-md-5">
+            <?php while($pastEvents->have_posts()) {
+                $pastEvents->the_post(); ?>
+                <div class="swiper-slide border rounded"><?php get_template_part('template-part/content', 'pastEvents'); ?></div>
+            <?php } ?>
+        </div>
+        <div class="swiper-pagination"></div>
+
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
 </div>
 
 

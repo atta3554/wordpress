@@ -2,12 +2,14 @@
 
 
 <div class="container rounded my-5 main py-5">
-    <div class='row'>
+    <h1 class='text-center'>from our professors</h1>
+    <div class='row justify-content-center'>
         <?php while(have_posts()) {
             the_post();
             get_template_part('template-part/content', 'professor');
         } ?>
     </div>
+    <h4 class="text-center">click on each professor to see information about them and their seminars</h4>
 </div>
 
 

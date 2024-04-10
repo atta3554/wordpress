@@ -10,7 +10,7 @@ pageBanner('Blog', 'find your favorite articles', '');
         <div class="row justify-content-center">
             <?php while(have_posts() and $counter < 2) {
                 the_post();
-                get_template_part('template-part/content', 'post');
+                get_template_part('template-part/content', get_post_type());
                 $counter++; 
             } ?>
         </div>
@@ -23,7 +23,7 @@ pageBanner('Blog', 'find your favorite articles', '');
         <div class="row justify-content-center">
             <?php while(have_posts() and $counter > 1 ) {
                 the_post();
-                get_template_part('template-part/content', 'post');
+                get_template_part('template-part/content', get_post_type());
                 $counter++; 
             } ?>
         </div>
