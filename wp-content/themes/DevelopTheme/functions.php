@@ -1,6 +1,7 @@
 <?php
 require_once get_template_directory() . '/inc/search_route.php';
 require_once get_template_directory() . '/inc/Likes_route.php';
+require_once get_template_directory() . '/inc/custom-login.php';
 
 
 function pageBanner($title, $subtitle, $photo) {
@@ -10,14 +11,13 @@ function pageBanner($title, $subtitle, $photo) {
     if(!$subtitle) $subtitle= get_field('page_banner_description');
 
     if(get_field('page_banner_background') AND !is_home() AND !is_archive()) $photo = get_field('page_banner_background')['sizes']['testSize'];
-    else if(!get_field('page_banner_background') or is_home() or is_archive()) $photo= get_theme_file_uri().'/assets/h-62.webp';
 
 ?>
 
     <!-- Hero Section -->
     <div class="container-fluid">
         <div class="row">
-            <div class="banner-section px-0" style="background-image: url('<?php echo $photo ?>');<?php if(!is_archive() AND !is_home() AND !is_front_page()) echo 'background-position: center top;' ?>">
+            <div class="banner-section px-0" <?php if($photo) : ?> style="background-image: url('<?php echo $photo ?>');" <?php endif; ?>>
                 <div class="cover w-100 h-100 px-5 d-flex flex-column justify-content-center">
                     <h1 class="hero-title text-white">welcome to <?php echo $title ?></h1>
                     <p class="hero-description text-white"><?php echo $subtitle ?></p>
@@ -27,7 +27,8 @@ function pageBanner($title, $subtitle, $photo) {
     </div>
     <!-- Hero Section -->
 
-<?php  }
+<?php 
+}
 
 
 
@@ -245,7 +246,10 @@ function noteSettings($data, $postarr) {
 
 add_filter('wp_insert_post_data', 'noteSettings', 10, 2);
 
-/***************************************** test *****************************************/
+
+
+
+/***************************************** test ****************************************
  function login_redirect( $redirect_to, $request, $user ) {
 
     if ( is_a ( $user , 'WP_User' ) && $user->exists() ) {
@@ -270,4 +274,4 @@ function WebP_upload_mimes( $existing_mimes ) {
 	return $existing_mimes;
 }
 
-add_filter( 'mime_types', 'WebP_upload_mimes' );
+add_filter( 'mime_types', 'WebP_upload_mimes' ); */

@@ -1,4 +1,4 @@
-<?php get_header(); pageBanner('', '', ''); ?>
+<?php get_header(); pageBanner('', '', ''); ?> 
 
 <div class="container-fluid most-post-types">
     <div class="row">

@@ -6,7 +6,7 @@ function themePostTypes() {
     register_post_type('event' , array(
         'capability_type'=> 'event',
         'map_meta_cap'=> true,
-        'supports'=>array('title', 'editor', 'excerpt', 'thumbnail'),
+        'supports'=>array('title', 'editor', 'excerpt', 'thumbnail', 'comments'),
         'has_archive'=>true,
         'rewrite'=>array('slug'=>'events'),
         'public'=>true,
@@ -27,7 +27,7 @@ function themePostTypes() {
     register_post_type('professor' , array(
         'capability_type'=> 'professor',
         'map_meta_cap'=> true,
-        'supports'=>array('title', 'editor', 'excerpt', 'thumbnail'),
+        'supports'=>array('title', 'editor', 'excerpt', 'thumbnail', 'comments'),
         'has_archive'=>true,
         'rewrite'=>array('slug'=>'professors'),
         'public'=>true,
@@ -50,7 +50,7 @@ function themePostTypes() {
         'map_meta_cap'=> true,
         'public'=> true,
         'show_in_rest'=> true,
-        'supports'=>array('title', 'editor', 'thumbnail', 'excerpt'),
+        'supports'=>array('title', 'editor', 'thumbnail', 'comments', 'excerpt'),
         'has_archive'=> true,
         'rewrite'=>array('slug'=> 'seminars'),
         'labels'=>array(
