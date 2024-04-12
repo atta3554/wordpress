@@ -7,6 +7,7 @@
   <?php wp_head(); ?>
 </head>
 <body>
+    <section id='website-wrapper'>
     <header class='position-absolute w-100'>
         <div class="container">
             <div class="row py-3">
@@ -27,8 +28,8 @@
                                 )) ?>
                                 
                                 <?php if(!is_user_logged_in()) {?>
-                                    <div class="my-2 login p-2 text-white mx-2 rounded"><a href="<?php echo wp_login_url(); ?>">Login</a></div>
-                                    <div class="my-2 register p-2 text-white mx-2 rounded"><a href="<?php echo wp_registration_url() ?>">Register</a></div>
+                                    <div class="my-2 login bg-primary py-2 px-4 text-white mx-2 rounded"><a href="<?php echo site_url('/login'); ?>">Login</a></div>
+                                    <div class="my-2 register bg-secondary py-2 px-4 text-white mx-2 rounded"><a href="<?php echo site_url('/register') ?>">Register</a></div>
                                 <?php }
                                 else { ?>
                                     <div class="login bg-primary px-2 pb-1 text-white mx-2 my-2 text-center rounded"><a href="<?php echo site_url('/my-notes') ?>">My Notes</a></div>

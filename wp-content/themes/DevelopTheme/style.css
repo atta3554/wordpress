@@ -7,9 +7,10 @@ author: sed ata ghor kele
 
 
 /* General styles */
-body{
-    overflow-x: hidden;
+html, body, #website-wrapper, main{
+    overflow-x: hidden !important;
 }
+
 div{
     line-height: 29px;
 }
@@ -60,18 +61,51 @@ a:hover{
 
 
 /* Login Page */
-body.login div#login h1 a{
-    background-image: url('assets/Logo.png');
-    background-size: 200px;
-    width: 200px;
+#custom_loginform .login-submit{
+    text-align: center;
+}
+
+#custom_loginform #wp-submit{
+    color: white;
+    background-color: #FF894C;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 64px;
+}
+
+#custom_loginform #wp-submit{
+    transition: transform .025s ease, color .3s ease;
+}
+
+#custom_loginform #wp-submit:active{
+    transform: translate(-5px, -5px);
+}
+
+#custom_loginform #wp-submit:hover{
+    color: yellow !important;
 }
 /* Login Page */
 
 
 
+/* Register Page */
+#user_register-form input[type=submit]{
+    transition: transform .025s ease, color .3s ease;
+}
+
+#user_register-form input[type=submit]:hover{
+    color: yellow !important;
+}
+
+#user_register-form input[type=submit]:active{
+    transform: translate(-5px, -5px);
+}
+/* Register Page */
+
+
+
 
 /* header */
-
 @media (max-width: 992px) {
     header > .container .col-9 .nav-container{
         visibility: hidden;
@@ -145,16 +179,33 @@ header .user-avatar img{
 
 /* Hero Section */
 .banner-section{
-    background: url('./assets/h-62.webp');
+    background: url('../../uploads/2024/01/fourth-1500x400.png');
     height: 400px;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center bottom;
+    background-size: 100%;
+    background-position: 50% 10%;
 }
 
 .banner-section .cover{
     background-color: rgba(0,0,0,.6);
+}
+
+@media only screen and (max-width: 768px) {
+    .banner-section {
+        background: url('../../uploads/2024/01/fourth-768x469.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width:1200px) {
+    .banner-section {
+        background: url('../../uploads/2024/01/fourth-1024x625.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+    }
 }
 /* Hero Section */
 

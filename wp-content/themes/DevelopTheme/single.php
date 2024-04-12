@@ -31,4 +31,9 @@
     </div>
 <?php endwhile; ?>
 
+<?php if(comments_open()) {
+    comments_template();
+}
+?>
+
 <?php get_footer() ?>

@@ -28,5 +28,8 @@
     </div>
 
 <?php endwhile; ?>
-
-<?php get_footer() ?>
+<?php 
+if(comments_open()) {
+    comments_template();
+}
+get_footer() ?>

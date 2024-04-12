@@ -56,5 +56,6 @@
 
         <?php wp_footer(); ?>
         </footer>    
+        </section>
     </body>
 </html>
