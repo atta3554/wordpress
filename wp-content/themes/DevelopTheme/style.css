@@ -1,0 +1,560 @@
+/* 
+Theme Name: ata Theme
+author: sed ata ghor kele
+*/
+
+
+
+
+/* General styles */
+html{
+    overflow-x: hidden;
+}
+
+div{
+    line-height: 29px;
+}
+
+.container{
+    max-width: 90% !important;
+}
+
+@keyframes spinner {
+    0%{
+        transform: rotate(0deg);
+    }
+
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.inset-0{
+    inset: 0;
+}
+
+.z-index-1{
+    z-index: 10;
+}
+
+.z-index-2{
+    z-index: 20;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    transition: color .1s ease-in-out;
+}
+
+a:hover{
+    color: yellow;
+}
+
+.post-overlay{
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0,0,0,.6);
+}
+/* General styles */
+
+
+
+
+/* Hover Animations */
+.animation-container{
+    position: relative;
+    overflow: hidden !important;
+    animation: animate 4s linear infinite;
+    background-color: #000;
+    margin-bottom: -35px;
+}
+
+.first-hover_animation{
+    display: inline-flex !important;
+    margin-top: -32px;
+    margin-left: -55px;
+    flex-wrap: nowrap;
+}
+
+.first-hover_animation:nth-child(odd) {
+    margin-left: 0;
+}
+
+.first-hover_animation-text{
+    pointer-events: none;
+}
+
+.first-hover_animation-text h2{
+    font-size: 6rem;
+    font-weight: 900;
+}
+
+.hexagon{
+    position: relative;
+    height: 100px;
+    width: 110px;
+    background-color: #111;
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    margin-left: 1px;
+    transition: 2s;
+}
+
+.hexagon:hover{
+    transition: 0s;
+    background-color: #0f0;
+}
+
+.hexagon::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    pointer-events: none;
+    background-color: rgba(255,255,255,0.02);
+}
+
+@keyframes animate{
+    0%{
+        filter: hue-rotate(0deg);
+    }
+
+    100%{
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* Hover Animations */
+
+
+
+
+/* Login Page */
+#custom_loginform .login-submit{
+    text-align: center;
+}
+
+#custom_loginform #wp-submit{
+    color: white;
+    background-color: #FF894C;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 64px;
+}
+
+#custom_loginform #wp-submit{
+    transition: transform .025s ease, color .3s ease;
+}
+
+#custom_loginform #wp-submit:active{
+    transform: translate(-5px, -5px);
+}
+
+#custom_loginform #wp-submit:hover{
+    color: yellow !important;
+}
+/* Login Page */
+
+
+
+/* Register Page */
+#user_register-form input[type=submit]{
+    transition: transform .025s ease, color .3s ease;
+}
+
+#user_register-form input[type=submit]:hover{
+    color: yellow !important;
+}
+
+#user_register-form input[type=submit]:active{
+    transform: translate(-5px, -5px);
+}
+/* Register Page */
+
+
+
+
+/* header */
+@media (max-width: 992px) {
+    header > .container .col-9 .nav-container{
+        visibility: hidden;
+        transition: visibility .1s ease;
+        width: fit-content;
+        height: fit-content;
+        position: absolute;
+        top: 50px;
+        left: -50px;
+    }
+    
+    header > .container .col-9 nav{
+        display: none;
+        transition: transform .3s ease;
+        transform: translateX(20px);
+        flex-direction: column;
+        justify-content: center;
+        width: fit-content;
+        height: fit-content;
+        background-color: #cecece;
+        padding: 10px;
+    }
+
+    header > .container .col-9 .nav-container nav > * {
+        width: 100%;
+    }
+
+    header > .container .col-9 .nav-container nav *{
+        text-wrap: nowrap;
+    }
+
+    header > .container .col-9 .nav-container nav ul{
+        flex-direction: column;
+    }
+
+    header > .container .col-9 .nav-container.active{
+        visibility: visible;
+    }
+    
+    header > .container .col-9 .nav-container.active nav{
+        display: flex;
+        transform: translateX(-20px);
+    }
+}
+
+@media (min-width: 992px) {
+    header .humburgur-menu{
+        display: none;
+    }
+}
+
+header .site-logo img{
+    width: 100%;
+}
+
+header #menu-primary li:hover a{
+    color: yellow;
+}
+
+header #menu-primary li.current-menu-item a{
+    color: yellow;
+}
+
+header .user-avatar img{
+    border-radius: .25em 0 0 .25em;
+}
+/* header */
+
+
+
+
+/* Hero Section */
+.banner-section{
+    background: url('../../uploads/2024/01/fourth-1500x400.png');
+    height: 400px;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 50% 0;
+}
+
+.banner-section .cover{
+    background-color: rgba(0,0,0,.6);
+}
+
+@media only screen and (max-width: 768px) {
+    .banner-section {
+        background: url('../../uploads/2024/01/fourth-768x469.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width:1200px) {
+    .banner-section {
+        background: url('../../uploads/2024/01/fourth-1024x625.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+    }
+}
+/* Hero Section */
+
+
+
+
+/* front-page */
+#main-slider {
+    max-height: 100vh;
+}
+
+.most-post-types .post-info{
+    min-width: 85px;
+    height: 85px;
+}
+
+.most-post-types .most-posts a{
+    color: #FF894C;
+}
+
+.most-post-types .most-posts a:hover, .most-post-types .professor-degree a:hover{
+    color: yellow;
+}
+
+.most-post-types .professor-degree a{
+    color: #FF894C;
+}
+/* front-page posts */
+
+
+
+
+/* Parent Pages Box */
+.parent-pages-box li , .parent-pages-box h3{
+    border-bottom: 1px solid black;
+    padding: 10px 10px;
+    list-style: none;
+    text-align: center;
+}
+
+.parent-pages-box h3 a , .parent-pages-box li a{
+    transition: color .1s ease-in-out;
+}
+
+.parent-pages-box h3 a:hover , .parent-pages-box li a:hover{
+    color: yellow !important;
+}
+
+.parent-pages-box li:last-child{
+    border: none;
+}
+
+.parent-pages-box li a{
+    color: white;
+}
+/* Parent Pages Box */
+
+
+
+
+/* Single Child Box */
+.single-child-box{
+    height: 50px;
+    margin-top: -50px;
+}
+/* Single Child Box */
+
+
+
+
+/* Blog page */
+.post-container .post-title a ,  .post-container .post-meta .post-author a{
+    color: black ;
+}
+
+.post-container .post-meta .post-author a{
+    text-decoration: underline;
+}
+
+.post-container .post-title a:hover  , .post-container .post-meta .post-author a:hover , .post-pagination a.page-numbers:hover , .single-child-box .post-author a:hover{
+    color: yellow;
+}
+
+.post-pagination .page-numbers{
+    color: black;
+    margin: 0 10px;
+}
+/* Blog page */
+
+
+
+
+/* Single Post */
+a.current-post{
+    color: yellow;
+}
+
+.single-child-box .post-author a{
+    color: black;
+    line-height: 10px;
+    text-decoration: underline !important;
+}
+/* Single Post */
+
+
+
+
+/* Seminars */
+.seminar-informations{
+    top: 100px;
+}
+
+.seminar-informations .seminar-professor-informations .seminar-professor-image{
+    transition: all .3s ease-in-out;
+}
+
+.seminar-informations .seminar-professor-informations .seminar-professor-image:hover{
+    filter: blur(1px);
+    transform:  rotate(-30deg) scale(1.2);
+}
+
+.seminar-informations .position-relative:nth-child(odd) .seminar-professor-image:hover{
+    filter: blur(1px);
+    transform:  rotate(30deg) scale(1.2) ;
+}
+
+.seminar-informations .seminar-professor-informations .seminar-professor-title{
+    transition: background .3s ease-in-out;
+}
+
+.seminar-informations .seminar-professor-informations:hover .seminar-professor-title{
+    background-color: #ffc107;
+}
+/* Seminars */
+
+
+
+
+/* past-Events */
+.past_event-date{
+    width: 150px;
+    min-height: 150px;
+}
+
+@media only screen and (max-width: 767px) {
+    .past_event-info{
+        flex-direction: column  ;
+    }
+}
+/* past-Events */
+
+
+
+
+
+
+/* Search Overlay */
+.fa-window-close{
+    cursor: pointer;
+}
+
+.search-overlay{
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease-in-out;
+}
+
+.search-overlay.active{
+    opacity: 1;
+    pointer-events: all;
+}
+
+.search-spinner{
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    border: 5px solid lightgray;
+    border-left-color: black;
+    animation: spinner 1s infinite linear both;
+}
+
+.result-title a:nth-child(2){
+    background-color: #cecece;
+    padding: 0px 10px 2px;
+}
+
+/* Search Overlay */
+
+
+
+/* Professors */
+.professor-container{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 40vh;
+}
+
+.like-area{
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    transition: background .1s linear;
+}
+
+.like-area:hover{
+    background-color: #d5d5d5;
+}
+/* Professors */
+
+
+/* Notes */
+.note-box{
+    transition: width .8s ease-in-out, padding .8s ease-in-out, opacity .5s ease-in-out, margin .8s ease-in-out;
+    text-wrap: nowrap;
+}
+
+.note-box .note-body, .new-note-box .note-body{
+    height: 300px;
+    border: none;
+    outline: none;
+    resize: none;
+}
+
+.note-box .note-title, .new-note-box .note-title{
+    border: none;
+    outline: none;
+}
+
+.note-title.active, .note-body.active{
+    border: 1px solid rgba(0,0,0,.6);
+    outline: auto;
+}
+
+.cancel-note, .error-message{
+    display: none;
+}
+
+.cancel-note.active, .error-message.active{
+    display: block;
+}
+
+.new-note-box{
+    background-color: rgb(205, 205, 205);
+}
+
+.note-box.hide{
+    width: 0px !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    opacity: 0 !important;
+}
+
+.delete-note__alert-container{
+    position: fixed;
+    inset: 35%;
+    display: none;
+}
+
+.delete-note__alert-container.active{
+    display: block;
+}
+
+.delete-note__alert-bg{
+    padding: 25px 10px;
+    background-color: #ff2323;
+    opacity: 0;
+    transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+}
+
+.delete-note__alert-bg.active{
+    opacity: 1;
+    transform: translateY(20px);
+}
+
+.delete-note__alert-content{
+    color: white;
+}
+.delete-note__alert-content.active{
+    display: block;
+}
+/* Notes */
