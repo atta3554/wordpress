@@ -107,7 +107,8 @@ function getSearchResults($data) {
 function registerSearchApi() {
     register_rest_route('ataRoute/v1', 'search', array(
         'methods'=> WP_REST_SERVER::READABLE,
-        'callback'=> 'getSearchResults'
+        'callback'=> 'getSearchResults',
+        'permission_callback'=> '__return_true'
     ));
 }
 

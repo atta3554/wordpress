@@ -1,9 +1,13 @@
 <?php if(!is_user_logged_in()) {
     wp_redirect(site_url('/'));
     exit;
-} ?>
-<?php get_header();?>
-<?php $myNotes= new WP_QUERY(array('post_type'=> 'note', 'post_per_page'=> -1)) ?>
+}
+get_header();
+$myNotes = new WP_Query(array(
+    'post_type'      => 'note',
+    'posts_per_page' => -1,
+    'author'         => get_current_user_id(),
+)); ?>
 
 
 <?php while(have_posts()) :the_post(); pageBanner('', '', '');?>
@@ -14,7 +18,7 @@
                 <h2 class="my-2">Create a new Note</h2>
                 <input type="text" class='note-title my-2' id="">
                 <textarea class="note-body my-2"></textarea>
-                <div class="col-12 my-2"><span class="submit-note my-2 w-100 text-center px-3 py-2 bg-danger text-white rounded" role='button'>Create Note</span></div>
+                <div class="col-12 my-2"><span tabindex="0" class="submit-note my-2 w-100 text-center px-3 py-2 bg-danger text-white rounded" role='button'>Create Note</span></div>
             </div>
         </div>
 
@@ -43,7 +47,10 @@
             <?php endwhile; ?>
         </div>
     </div>
-<?php endwhile; ?>
+<?php 
+endwhile;
+wp_reset_postdata();
+?>
 
 <div class="delete-note__alert-container">
     <div class="delete-note__alert-bg rounded">

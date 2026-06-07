@@ -61,14 +61,14 @@ class Like{
         })
         .then(res=> res.json())
         .then(data=> {
-            if(data !== 'only logged in users can like professors' && data !== 'invalid professor id') {
+            if(typeof data === 'number') {
                 +this.likeicon.parentElement.nextElementSibling.innerHTML++;
                 this.likeicon.parentElement.parentElement.parentElement.setAttribute('data-exist', 'yes')
                 this.likeicon.parentElement.parentElement.parentElement.setAttribute('data-like', data)
                 this.likeicon.classList.remove('fa-regular')
                 this.likeicon.classList.add('fa-solid')
-            } else if(data === 'invalid professor id') {
-                alert('you are trying to manipulate my website! I will kill you😈')
+            } else if(data === 'invalid professor id' || data.code === 'invalid_professor_id') {
+                alert('Invalid professor id.')
             } else {
                 alert('you dont have permission to Like professors! only logged in users can do this')
             }
@@ -94,7 +94,7 @@ class Like{
             this.likeicon.parentElement.parentElement.parentElement.setAttribute('data-exist', 'no')
             this.likeicon.parentElement.parentElement.parentElement.removeAttribute('data-like')
             this.likeicon.classList.remove('fa-solid')
-            this.likeicon.classList.add('   fa-regular')
+            this.likeicon.classList.add('fa-regular')
         })
         .catch(err=> console.log(err))
     }

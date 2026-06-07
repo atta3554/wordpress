@@ -4,23 +4,42 @@ require_once get_template_directory() . '/inc/Likes_route.php';
 require_once get_template_directory() . '/inc/custom-login.php';
 
 
-function pageBanner($title, $subtitle, $photo) {
-    
-    if(!$title) $title= get_the_title();
+function pageBanner($title = '', $subtitle = '', $photo = '') {
+    $queriedObjectId = get_queried_object_id();
 
-    if(!$subtitle) $subtitle= get_field('page_banner_description');
+    if(!$title) {
+        if(is_front_page()) {
+            $title = get_bloginfo('name');
+        } elseif(is_home()) {
+            $title = single_post_title('', false);
+        } elseif(is_archive()) {
+            $title = get_the_archive_title();
+        } elseif($queriedObjectId) {
+            $title = get_the_title($queriedObjectId);
+        }
+    }
 
-    if(get_field('page_banner_background') AND !is_home() AND !is_archive()) $photo = get_field('page_banner_background')['sizes']['testSize'];
+    if(!$subtitle && $queriedObjectId) {
+        $subtitle = get_field('page_banner_description', $queriedObjectId);
+    }
+
+    if(!$photo && $queriedObjectId && !is_home() && !is_archive()) {
+        $bannerBackground = get_field('page_banner_background', $queriedObjectId);
+
+        if($bannerBackground && isset($bannerBackground['sizes']['testSize'])) {
+            $photo = $bannerBackground['sizes']['testSize'];
+        }
+    }
 
 ?>
 
     <!-- Hero Section -->
     <div class="container-fluid">
         <div class="row">
-            <div class="banner-section px-0" <?php if($photo) : ?> style="background-image: url('<?php echo $photo ?>');" <?php endif; ?>>
+            <div class="banner-section px-0" <?php if($photo) : ?> style="background-image: url('<?php echo esc_url($photo); ?>');" <?php endif; ?>>
                 <div class="cover w-100 h-100 px-5 d-flex flex-column justify-content-center">
-                    <h1 class="hero-title text-white">welcome to <?php echo $title ?></h1>
-                    <p class="hero-description text-white"><?php echo $subtitle ?></p>
+                    <h1 class="hero-title text-white">welcome to <?php echo esc_html($title); ?></h1>
+                    <p class="hero-description text-white"><?php echo esc_html($subtitle); ?></p>
                 </div>
             </div>
         </div>
@@ -104,6 +123,50 @@ function ataMenus() {
 
 add_action('init' , 'ataMenus');
 
+function ataPrimaryMenuFallback($args) {
+    $menuClass = isset($args['menu_class']) ? $args['menu_class'] : '';
+    $items = array(
+        array(
+            'title'=> 'Home',
+            'url'=> home_url('/'),
+            'active'=> is_front_page(),
+        ),
+        array(
+            'title'=> 'Professors',
+            'url'=> get_post_type_archive_link('professor'),
+            'active'=> is_post_type_archive('professor') || is_singular('professor'),
+        ),
+        array(
+            'title'=> 'Events',
+            'url'=> get_post_type_archive_link('event'),
+            'active'=> is_post_type_archive('event') || is_singular('event'),
+        ),
+        array(
+            'title'=> 'Seminars',
+            'url'=> get_post_type_archive_link('seminar'),
+            'active'=> is_post_type_archive('seminar') || is_singular('seminar'),
+        ),
+    );
+
+    echo '<ul class="' . esc_attr($menuClass) . '">';
+
+    foreach($items as $item) {
+        if(!$item['url']) {
+            continue;
+        }
+
+        $itemClasses = 'menu-item';
+
+        if($item['active']) {
+            $itemClasses .= ' current-menu-item';
+        }
+
+        echo '<li class="' . esc_attr($itemClasses) . '"><a href="' . esc_url($item['url']) . '">' . esc_html($item['title']) . '</a></li>';
+    }
+
+    echo '</ul>';
+}
+
 
 
 
@@ -174,6 +237,7 @@ function redirectUser() {
 
     if(count($currentUser->roles) === 1 AND $currentUser->roles[0]=== 'subscriber') {
         wp_redirect(site_url('/'));
+        exit;
     }
 }
 
@@ -226,14 +290,20 @@ add_filter('login_headertitle', 'CustomizeLoginTitle');
 
 
 // put Limits for notes and set Notes status to private and secure notes
+function enforceNoteLimit($prepared_post, $request) {
+    if(empty($prepared_post->ID) && count_user_posts(get_current_user_id(), 'note') >= 5) {
+        return new WP_Error('note_limit_reached', 'limit note count! delete some notes first', array('status'=> 400));
+    }
+
+    return $prepared_post;
+}
+
+add_filter('rest_pre_insert_note', 'enforceNoteLimit', 10, 2);
+
 function noteSettings($data, $postarr) {
 
     $PostId= $postarr['ID'];
     if($data['post_type']=== 'note') {
-        if( (count_user_posts(get_current_user_id(), 'note') > 4 ) AND (!$PostId)) {
-            die(json_encode(array("error"=> 'limit note count! delete some notes first')));
-        }
-
         $data['post_content']= sanitize_textarea_field($data['post_content']);
         $data['post_title']= sanitize_text_field($data['post_title']);
     }
