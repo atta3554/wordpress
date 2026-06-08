@@ -3,76 +3,46 @@
 Template Name: custom login page
 */
 
-session_start();
+if (!defined('ABSPATH')) {
+    exit;
+}
 
-if(is_user_logged_in()) {
-    wp_redirect(site_url(''));
+if (is_user_logged_in()) {
+    wp_safe_redirect(home_url('/'));
     exit;
 }
 
 get_header();
-pageBanner('', '', '');
+em_theme_page_banner('', '', '');
 
-$err_codes = isset( $_SESSION["err_codes"] ) ? $_SESSION["err_codes"] : 0;
-
-function display_error_message( $err_code ){
-    global $error;
-    // Invalid username.
-    if ( in_array( 'invalid_username', $err_code ) ) {
-        $error = '<strong CLASS="text-danger">ERROR</strong>: Invalid username.';
-    }
-    // Incorrect password.
-    if ( in_array( 'incorrect_password', $err_code ) ) {
-        $error = '<strong CLASS="text-danger">ERROR</strong>: The password you entered is incorrect.';
-    }
-    // Empty username.
-    if ( in_array( 'empty_username', $err_code ) ) {
-        $error = '<strong CLASS="text-danger">ERROR</strong>: The username field is empty.';
-    }
-    // Empty password.
-    if ( in_array( 'empty_password', $err_code ) ) {
-        $error = '<strong CLASS="text-danger">ERROR</strong>: The password field is empty.';
-    }
-    // Empty username and empty password.
-    if( in_array( 'empty_username', $err_code )  &&  in_array( 'empty_password', $err_code )){
-        $error = '<strong CLASS="text-danger">ERROR</strong>: The username and password are empty.';
-    }
-    // Incorrect username and password.
-    if( in_array( 'invalid_username', $err_code )  &&  in_array( 'incorrect_password', $err_code )){
-        $error = '<strong CLASS="text-danger">ERROR</strong>: The username and password are invalid.';
-    }
-    return $error;
-} ?>
+$login_failed = isset($_GET['login']) && 'failed' === sanitize_key(wp_unslash($_GET['login']));
+?>
 
 <div class="container my-5">
     <div class="row justify-content-center">
-        <div class="col-9 col-sm-6 col-md-5 border rounded p-5">
-            <h4 class="text-center py-2">sing in to your account</h4>
-        <?php
+        <div class="col-12 col-sm-8 col-md-6 col-lg-5 border rounded p-4 p-sm-5">
+            <h2 class="text-center py-2"><?php esc_html_e('Sign in to your account', 'event-management-theme'); ?></h2>
+            <?php if ($login_failed) : ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php esc_html_e('Login failed. Please check your username and password.', 'event-management-theme'); ?>
+                </div>
+            <?php endif; ?>
 
-        if( $err_codes !== 0 ){
-        echo display_error_message(  $err_codes );
-        }
-        
-        if ( ! is_user_logged_in() ) {
-    $args = array(
-        'redirect' => admin_url(), // redirect to admin dashboard.
-        'form_id' => 'custom_loginform',
-        'label_username' => __( 'Username:' ),
-        'label_password' => __( 'Password:' ),
-        'label_remember' => __( 'Remember Me' ),
-        'label_log_in' => __( 'Log In' ),
-        'remember' => true
-    );
-    wp_login_form( $args );
-} ?>
+            <?php
+            wp_login_form(
+                array(
+                    'redirect'       => home_url('/my-notes/'),
+                    'form_id'        => 'custom_loginform',
+                    'label_username' => __('Username', 'event-management-theme'),
+                    'label_password' => __('Password', 'event-management-theme'),
+                    'label_remember' => __('Remember Me', 'event-management-theme'),
+                    'label_log_in'   => __('Log In', 'event-management-theme'),
+                    'remember'       => true,
+                )
+            );
+            ?>
         </div>
     </div>
 </div>
 
-
-<?php get_footer();
-
-session_unset();
-session_destroy();
-?>
+<?php get_footer(); ?>

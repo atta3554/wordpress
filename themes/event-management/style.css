@@ -2,11 +2,16 @@
 Theme Name: Event Management Theme
 Author: Ashrafi
 Author URI: mailto:ata.ashrafi3554@gmail.com
+Description: A classic WordPress event management theme for events, seminars, professors, notes and live search.
+Version: 1.0.0
+Requires at least: 6.0
+Requires PHP: 7.4
+Text Domain: event-management-theme
 */
 
 /* General styles */
 html,
-body,
+body:not(body.single-professor),
 #website-wrapper,
 main {
   overflow-x: hidden !important;
@@ -51,10 +56,62 @@ a:hover {
   color: yellow;
 }
 
+#main-content .post-content a {
+  color: blue;
+}
+
+button {
+  font: inherit;
+}
+
+header {
+  position: relative;
+  z-index: 10;
+}
+
+.screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.screen-reader-text:focus {
+  width: auto;
+  height: auto;
+  clip: auto;
+  z-index: 100000;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  color: #111;
+}
+
 .post-overlay {
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.6);
+}
+
+.post-thumbnail__placeholder {
+  min-height: 180px;
+}
+
+.post-thumbnail img,
+.featured-image img,
+.result-thumbnail img,
+.past_event-thumbnail__image {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-thumbnail img {
+  min-height: 210px;
+  object-fit: cover;
 }
 /* General styles */
 
@@ -103,6 +160,12 @@ a:hover {
 /* Register Page */
 
 /* header */
+.site-header__menu-toggle {
+  background: transparent;
+  border: 0;
+  color: #fff;
+}
+
 @media (max-width: 992px) {
   header > .container .col-9 .nav-container {
     visibility: hidden;
@@ -161,6 +224,17 @@ a:hover {
 header .site-logo img {
   width: 100%;
   max-width: 250px;
+  height: auto;
+}
+
+header .custom-logo-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+header .site-logo__text {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 700;
 }
 
 header .nav-container .menu-item:hover > a {
@@ -230,6 +304,295 @@ header .user-avatar img {
   color: #ff894c;
 }
 /* front-page posts */
+
+/* Front Page Experience */
+.front-hero {
+  min-height: 100vh;
+  background: #171717;
+  isolation: isolate;
+}
+
+.front-hero__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.front-hero__slider,
+.front-hero__slider .swiper-wrapper,
+.front-hero__slide {
+  min-height: 100vh;
+}
+
+.front-hero__slide {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-position: center;
+  background-size: cover;
+}
+
+.front-hero__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.84),
+      rgba(0, 0, 0, 0.44) 52%,
+      rgba(0, 0, 0, 0.72)
+    ),
+    linear-gradient(0deg, rgba(220, 47, 47, 0.3), rgba(0, 0, 0, 0.1));
+}
+
+.front-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  padding-top: 96px;
+  padding-bottom: 88px;
+  color: #fff;
+}
+
+.front-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.front-hero__meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.front-hero__title {
+  max-width: 720px;
+  margin-bottom: 18px;
+  color: #fff;
+  font-size: clamp(2.6rem, 7vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+.front-hero__excerpt {
+  max-width: 620px;
+  margin-bottom: 28px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.1rem;
+}
+
+.front-hero__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 10px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: #dc2f2f;
+  color: #fff;
+}
+
+.front-hero__link:hover {
+  color: #fff;
+  background: #ff894c;
+}
+
+.front-hero__controls {
+  position: absolute;
+  right: 5%;
+  bottom: 34px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 44px;
+}
+
+.front-hero__nav {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.42);
+  color: #fff;
+}
+
+.front-events-pagination,
+.front-featured-pagination {
+  position: static;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.front-events-pagination .swiper-pagination-bullet,
+.front-featured-pagination .swiper-pagination-bullet {
+  width: 9px;
+  height: 9px;
+  margin: 0 !important;
+  background: #cecece;
+  opacity: 1;
+}
+
+.front-events-pagination .swiper-pagination-bullet-active,
+.front-featured-pagination .swiper-pagination-bullet-active {
+  background: #ff894c;
+}
+
+.front-featured {
+  padding: 72px 0;
+  background: #f8f8f8;
+}
+
+.front-featured--seminars {
+  background: #fff;
+}
+
+.front-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.front-section-heading h2 {
+  margin: 0;
+  color: #171717;
+  font-size: 2rem;
+}
+
+.front-section-heading a {
+  color: #dc2f2f;
+}
+
+.front-card {
+  height: auto;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+}
+
+.front-card__media {
+  display: block;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  background: #363636;
+}
+
+.front-card__image,
+.front-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.front-card__body {
+  min-height: 164px;
+  padding: 20px;
+}
+
+.front-card__body h3 {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+
+.front-card__body h3 a {
+  color: #171717;
+}
+
+.front-card__body h3 a:hover,
+.front-section-heading a:hover {
+  color: #ff894c;
+}
+
+.front-card__body p {
+  margin: 0;
+}
+
+.front-card__body p a {
+  color: #4b4b4b;
+}
+
+.front-featured-pagination {
+  margin-top: 26px;
+}
+
+.front-featured-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.front-featured-controls .front-featured-pagination {
+  width: auto;
+  min-width: 72px;
+  margin-top: 0;
+}
+
+.front-featured-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: #171717;
+  color: #fff;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.front-featured-nav:hover:not(:disabled) {
+  border-color: #dc2f2f;
+  background: #dc2f2f;
+  color: #fff;
+}
+
+.front-featured-nav.swiper-button-disabled,
+.front-featured-nav:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+@media only screen and (max-width: 767px) {
+  .front-hero,
+  .front-hero__slider,
+  .front-hero__slider .swiper-wrapper,
+  .front-hero__slide {
+    min-height: 560px;
+  }
+
+  .front-hero__content {
+    padding-top: 118px;
+    padding-bottom: 110px;
+  }
+
+  .front-hero__controls {
+    right: auto;
+    left: 5%;
+    bottom: 24px;
+  }
+
+  .front-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+/* Front Page Experience */
 
 /* Parent Pages Box */
 .parent-pages-box li,
@@ -404,8 +767,42 @@ a.current-post {
   transition: background 0.1s linear;
 }
 
+.like-area:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
 .like-area:hover {
   background-color: #d5d5d5;
+}
+
+.single-professor #website-wrapper,
+.single-professor #main-content {
+  overflow: visible !important;
+}
+
+.professor-sidebar-column {
+  position: relative;
+}
+
+.professor-profile-panel {
+  position: sticky;
+  top: 50px;
+  z-index: 1;
+}
+
+.professor-meta {
+  flex-wrap: wrap;
+}
+
+.single-professor .professor-field-link {
+  color: yellow;
+}
+
+@media only screen and (max-width: 575px) {
+  .professor-profile-panel {
+    position: static;
+  }
 }
 /* Professors */
 
@@ -464,6 +861,7 @@ a.current-post {
   position: fixed;
   inset: 35%;
   display: none;
+  z-index: 1000;
 }
 
 .delete-note__alert-container.active {
@@ -491,3 +889,19 @@ a.current-post {
   display: block;
 }
 /* Notes */
+
+@media only screen and (max-width: 575px) {
+  .header-actions {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+
+  .single-child-box {
+    height: auto;
+    min-height: 50px;
+  }
+
+  .delete-note__alert-container {
+    inset: 25% 5%;
+  }
+}

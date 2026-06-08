@@ -1,117 +1,137 @@
-<?php 
+<?php
+/**
+ * REST search endpoint.
+ *
+ * @package EventManagementTheme
+ */
 
-// Prepare Datas for new API route
-function getSearchResults($data) {
+if (!defined('ABSPATH')) {
+    exit;
+}
 
-    $allResults= array(
-        'pages'=> array(),
-        'posts'=> array(),
-        'events'=> array(),
-        'professors'=> array(),
-        'seminars'=> array(),
+function em_theme_get_search_results($request)
+{
+    $keyword = sanitize_text_field($request->get_param('keyword'));
+    $results = array(
+        'pages'      => array(),
+        'posts'      => array(),
+        'events'     => array(),
+        'professors' => array(),
+        'seminars'   => array(),
     );
 
-
-    $mainQuery= new WP_QUERY(array(
-        'post_type'=> array('page', 'post', 'professor', 'event', 'seminar'),
-        's'=> $data['keyword']
-    ));
-
-    while($mainQuery->have_posts()) {
-        $mainQuery->the_post();
-
-        if(get_post_type()== 'page')
-        array_push($allResults['pages'], array(
-            'title'=> get_the_title(),
-            'URL'=> get_the_permalink(),
-            'excerpt'=> get_the_excerpt()
-        ));
-
-        if(get_post_type()== 'post')
-        array_push($allResults['posts'], array(
-            'title'=> get_the_title(),
-            'URL'=> get_the_permalink(),
-            'thumbnail'=> get_the_post_thumbnail_url(0, 'medium'),
-            'excerpt'=> get_the_excerpt(),
-            'author'=> get_the_author_posts_link()
-        ));
-
-        if(get_post_type()== 'event')
-        array_push($allResults['events'], array(
-            'title'=> get_the_title(),
-            'URL'=> get_the_permalink(),
-            'excerpt'=> get_the_excerpt(),
-            'date'=> get_field('event_date')
-        ));
-
-        if(get_post_type()== 'professor')
-        array_push($allResults['professors'], array(
-            'title'=> get_the_title(),
-            'URL'=> get_the_permalink(),
-            'thumbnail'=> get_the_post_thumbnail_url(0, 'medium'),
-            'excerpt'=> get_the_excerpt(),
-            'id'=> get_the_id(0)
-        ));
-
-        if(get_post_type()== 'seminar')
-        array_push($allResults['seminars'], array(
-            'title'=> get_the_title(),
-            'URL'=> get_the_permalink(),
-            'excerpt'=> get_the_excerpt(),
-            'thumbnail'=> get_the_post_thumbnail_url(0, 'medium'),
-        ));
+    if (strlen($keyword) < 2) {
+        return rest_ensure_response($results);
     }
 
+    $main_query = new WP_Query(
+        array(
+            'post_type'      => array('page', 'post', 'professor', 'event', 'seminar'),
+            'post_status'    => 'publish',
+            'posts_per_page' => 10,
+            'no_found_rows'  => true,
+            's'              => $keyword,
+        )
+    );
 
+    while ($main_query->have_posts()) {
+        $main_query->the_post();
+        $post_type = get_post_type();
 
-    // show related Seminars for searched professor
-    if($allResults['professors']) {
+        $item = array(
+            'title'     => html_entity_decode(get_the_title(), ENT_QUOTES, get_bloginfo('charset')),
+            'URL'       => get_permalink(),
+            'excerpt'   => em_theme_trimmed_excerpt(24),
+            'thumbnail' => get_the_post_thumbnail_url(get_the_ID(), 'medium') ?: '',
+        );
 
-        $professorRelatedSeminarsQuery= array('relation'=> 'OR') ;
-        foreach($allResults['professors'] as $item) {
-            array_push($professorRelatedSeminarsQuery, array(
-                'key'=> 'seminar_professor',
-                'compare'=> "LIKE",
-                'value'=> $item['id']
-            ));
-
+        if ('post' === $post_type) {
+            $item['author'] = get_the_author();
+            $item['authorURL'] = get_author_posts_url(get_the_author_meta('ID'));
+            $results['posts'][] = $item;
         }
 
-        $seminarsCustomFieldsQuery= new WP_QUERY(array(
-            'post_type'=> array('seminar'),
-            'meta_query'=> $professorRelatedSeminarsQuery
-        ));
-
-        while($seminarsCustomFieldsQuery->have_posts()) {
-            $seminarsCustomFieldsQuery->the_post();
-
-            array_push($allResults['seminars'], array(
-                'title'=> get_the_title(),
-                'URL'=> get_the_permalink(),
-                'excerpt'=> get_the_excerpt(),
-                'thumbnail'=> get_the_post_thumbnail_url(0, 'medium'),
-            ));
+        if ('page' === $post_type) {
+            unset($item['thumbnail']);
+            $results['pages'][] = $item;
         }
 
-        $allResults['seminars']= array_unique($allResults['seminars'], SORT_REGULAR);
+        if ('event' === $post_type) {
+            $event_date = em_theme_get_event_datetime();
+            $item['date'] = $event_date ? $event_date->format('Ymd') : '';
+            unset($item['thumbnail']);
+            $results['events'][] = $item;
+        }
+
+        if ('professor' === $post_type) {
+            $item['id'] = get_the_ID();
+            $results['professors'][] = $item;
+        }
+
+        if ('seminar' === $post_type) {
+            $results['seminars'][] = $item;
+        }
     }
-    // show related Seminars for searched professor
+    wp_reset_postdata();
 
-    return $allResults;
+    if ($results['professors']) {
+        $professor_related_seminars_query = array('relation' => 'OR');
+
+        foreach ($results['professors'] as $item) {
+            $professor_related_seminars_query[] = array(
+                'key'     => 'seminar_professor',
+                'compare' => 'LIKE',
+                'value'   => '"' . absint($item['id']) . '"',
+            );
+        }
+
+        $seminars_custom_fields_query = new WP_Query(
+            array(
+                'post_type'      => 'seminar',
+                'post_status'    => 'publish',
+                'posts_per_page' => 10,
+                'no_found_rows'  => true,
+                'meta_query'     => $professor_related_seminars_query,
+            )
+        );
+
+        while ($seminars_custom_fields_query->have_posts()) {
+            $seminars_custom_fields_query->the_post();
+
+            $results['seminars'][] = array(
+                'title'     => html_entity_decode(get_the_title(), ENT_QUOTES, get_bloginfo('charset')),
+                'URL'       => get_permalink(),
+                'excerpt'   => em_theme_trimmed_excerpt(24),
+                'thumbnail' => get_the_post_thumbnail_url(get_the_ID(), 'medium') ?: '',
+            );
+        }
+        wp_reset_postdata();
+
+        $results['seminars'] = array_values(array_unique($results['seminars'], SORT_REGULAR));
+    }
+
+    return rest_ensure_response($results);
 }
 
-
-
-
-// Register new Api route
-function registerSearchApi() {
-    register_rest_route('ataRoute/v1', 'search', array(
-        'methods'=> WP_REST_SERVER::READABLE,
-        'callback'=> 'getSearchResults',
-        'permission_callback'=> '__return_true'
-    ));
+function em_theme_register_search_api()
+{
+    register_rest_route(
+        'ataRoute/v1',
+        'search',
+        array(
+            'methods'             => WP_REST_Server::READABLE,
+            'callback'            => 'em_theme_get_search_results',
+            'permission_callback' => '__return_true',
+            'args'                => array(
+                'keyword' => array(
+                    'required'          => true,
+                    'sanitize_callback' => 'sanitize_text_field',
+                    'validate_callback' => function($value) {
+                        return is_string($value);
+                    },
+                ),
+            ),
+        )
+    );
 }
-
-add_action('rest_api_init', 'registerSearchApi')
-
-?>
+add_action('rest_api_init', 'em_theme_register_search_api');

@@ -16,4 +16,11 @@ const menu = new Menu()
 const search = new Search() 
 const notes = new Notes()
 const like = new Like()
-const swiper = new SwiperSlider()
+
+if (document.querySelector('.front-hero')) {
+  import('./modules/FrontPageExperience').then(({ default: FrontPageExperience }) => {
+    new FrontPageExperience()
+  })
+} else {
+  new SwiperSlider()
+}
