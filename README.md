@@ -32,6 +32,35 @@ Current production notes:
 - `npm run build` passes. Webpack still warns about a large lazy-loaded vendor chunk from Three.js/GSAP.
 - There is no automated test suite yet. Run the manual checklist before launch.
 
+## Deployment
+
+The live demo is deployed on an Ubuntu VPS using a containerized WordPress stack.
+
+Production infrastructure:
+
+- Nginx as the public reverse proxy
+- Docker Compose for service orchestration
+- WordPress (PHP 8.3 Apache image)
+- MariaDB 11
+- Cloudflare DNS and HTTPS proxy
+- Let's Encrypt SSL certificates managed through Certbot
+- Persistent Docker volumes for WordPress and database data
+- Theme and mu-plugins mounted separately into wp-content
+
+## Request flow:
+
+Cloudflare
+    ↓
+Nginx (80/443)
+    ↓
+WordPress Container
+    ↓
+MariaDB Container
+
+The repository contains only the application code. Production credentials, server configuration, SSL keys, database dumps, and other sensitive infrastructure files are intentionally excluded.
+
+Deployment-specific values such as domains, secrets, and environment configuration should be provided separately for each environment.
+
 ## Requirements
 
 - WordPress 6.0+
