@@ -84,9 +84,7 @@ function em_theme_render_logo() {
   if (has_custom_logo()) {
       the_custom_logo();
   } else if(file_exists(get_theme_file_path( $relative_path ))) {
-      {
-      echo "<img src='" . get_theme_file_uri( $relative_path ) . "'>";
-    }
+      echo '<img src="' . esc_url(get_theme_file_uri($relative_path)) . '" alt="' . esc_attr(get_bloginfo('name')) . '">';
   } else {
       echo '<span class="site-logo__text">' . esc_html(get_bloginfo('name')) . '</span>';
   }

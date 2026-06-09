@@ -1,384 +1,232 @@
 # Event Management Theme
 
-A custom WordPress Event Management platform built with a custom theme and MU plugin architecture.
+A classic WordPress theme for managing events, seminars, professors, user notes, live search, custom login/register pages, and a polished front-page experience.
 
-The project provides a complete environment for managing:
+## Live Site
 
-* Events
-* Professors
-* Seminars
-* User Notes
-* Professor Likes
-* Custom Search
-* Custom Authentication Pages
-
-The application is powered by WordPress Custom Post Types, Advanced Custom Fields (ACF), custom REST API endpoints, and a modern front-end build process.
-
----
-
-## Features
-
-### Event Management
-
-* Custom Event post type
-* Event archive page
-* Upcoming event filtering
-* Event date sorting
-* Featured images support
-* Comments support
-
-### Professor Management
-
-* Custom Professor post type
-* Professor archive page
-* Professor profile pages
-* Like system for professors
-* Featured images support
-* Comments support
-
-### Seminar Management
-
-* Custom Seminar post type
-* Seminar archive page
-* Professor–Seminar relationships
-* Featured images support
-* Comments support
-
-### Notes System
-
-Authenticated users can:
-
-* Create notes
-* Update notes
-* Delete notes
-
-Additional security rules:
-
-* Notes are automatically stored as Private posts
-* Note content is sanitized before saving
-* Maximum 5 notes per user
-
-### Custom Search
-
-A custom REST API search endpoint allows searching across:
-
-* Pages
-* Posts
-* Events
-* Professors
-* Seminars
-
-Related seminars are automatically included when matching professors are found.
-
-### Professor Like System
-
-Authenticated users can:
-
-* Like professors
-* Remove likes
-
-The system prevents duplicate likes for the same professor.
-
-### Authentication Customization
-
-Includes:
-
-* Custom login page
-* Login page redirect
-* Login error handling
-* Custom login branding
-* Custom login logo URL
-* Custom login title
-
-### User Experience Improvements
-
-* Custom archive titles
-* Subscriber dashboard restriction
-* Subscriber admin bar removal
-* Front-end login redirection
-
-### Theme Features
-
-* Featured images
-* Dynamic page banners
-* Custom logo support
-* Dynamic page titles
-* Responsive design
-* Bootstrap integration
-* Font Awesome integration
-
----
-
-## Project Structure
+Production URL:
 
 ```text
-event-management-theme/
-│
-├── mu-plugins/
-│   └── custom-post-type.php
-│
-└── themes/
-    └── DevelopTheme/
-        │
-        ├── assets/
-        ├── build/
-        ├── inc/
-        │   ├── custom-login.php
-        │   ├── Likes_route.php
-        │   └── search_route.php
-        │
-        ├── archive-event.php
-        ├── archive-professor.php
-        ├── archive-seminar.php
-        ├── front-page.php
-        ├── header.php
-        ├── footer.php
-        ├── functions.php
-        └── style.css
+https://event-management.ashrafisolutions.com/
 ```
 
----
+## Screenshot
 
-## Custom Post Types
+![Event Management home page](docs/home-page.png)
 
-The project registers the following post types through an MU Plugin.
+The project is intentionally split into two layers:
 
-### Event
+- Theme code in `wp-content/themes/event-management`
+- Persistent data model code in `wp-content/mu-plugins`
 
-Slug:
+This separation matters because custom post types, capabilities, taxonomies, and ACF field groups should not disappear when the theme is switched.
 
-```text
-/events
-```
+## Production Status
 
-Capabilities:
+The theme has been reviewed for bootstrap flow, required pages, REST endpoints, login/register routing, escaping, nonce usage, frontend builds, and PHP syntax.
 
-* Title
-* Editor
-* Excerpt
-* Thumbnail
-* Comments
+Current production notes:
 
-### Professor
+- The required `mu-plugins` files must be deployed with the site.
+- Advanced Custom Fields should be active for admin editing of custom fields. The frontend has fallbacks, but the admin editing experience is incomplete without ACF.
+- `npm run build` passes. Webpack still warns about a large lazy-loaded vendor chunk from Three.js/GSAP.
+- There is no automated test suite yet. Run the manual checklist before launch.
 
-Slug:
+## Requirements
 
-```text
-/professors
-```
-
-Capabilities:
-
-* Title
-* Editor
-* Excerpt
-* Thumbnail
-* Comments
-
-### Seminar
-
-Slug:
-
-```text
-/seminars
-```
-
-Capabilities:
-
-* Title
-* Editor
-* Excerpt
-* Thumbnail
-* Comments
-
-### Note
-
-Internal post type used by authenticated users.
-
-Characteristics:
-
-* Private
-* REST enabled
-* Limited to 5 notes per user
-
-### Like
-
-Internal post type used to store professor likes.
-
-Characteristics:
-
-* Hidden from public
-* Stored per user
-
----
-
-## REST API Endpoints
-
-### Search Endpoint
-
-```http
-GET /wp-json/ataRoute/v1/search
-```
-
-Example:
-
-```http
-GET /wp-json/ataRoute/v1/search?keyword=wordpress
-```
-
-Returns:
-
-* Pages
-* Posts
-* Events
-* Professors
-* Seminars
-
----
-
-### Like Professor
-
-Create Like:
-
-```http
-POST /wp-json/ataRoute/v1/like
-```
-
-Remove Like:
-
-```http
-DELETE /wp-json/ataRoute/v1/like
-```
-
-Authentication required.
-
----
-
-## Dynamic Event Filtering
-
-Upcoming events are automatically filtered using:
-
-```php
-pre_get_posts
-```
-
-Behavior:
-
-* Past events are hidden
-* Events are sorted by event date
-* Closest upcoming events appear first
-
----
-
-## Required Plugins
-
-### Advanced Custom Fields (ACF)
-
-The theme relies on ACF fields such as:
-
-* event_date
-* seminar_professor
-* page_banner_background
-* page_banner_description
-
-Install and configure ACF before using the project.
-
----
-
-## Front-End Stack
-
-* WordPress
-* PHP
-* Bootstrap
-* Font Awesome
-* JavaScript
-* REST API
-* Webpack Build System
-
-Compiled assets are located in:
-
-```text
-/build
-```
-
----
+- WordPress 6.0+
+- PHP 7.4+
+- Node.js and npm for building frontend assets
+- Advanced Custom Fields for custom field editing in the admin
 
 ## Installation
 
-### 1. Clone Repository
+1. Place the theme directory here:
+
+```text
+wp-content/themes/event-management
+```
+
+2. Make sure these model files exist in `mu-plugins`:
+
+```text
+wp-content/mu-plugins/custom-post-type.php
+wp-content/mu-plugins/theme-capabilities.php
+wp-content/mu-plugins/acf-fields.php
+wp-content/mu-plugins/professor-taxonomy.php
+```
+
+3. Install frontend dependencies and build assets:
 
 ```bash
-git clone https://github.com/atta3554/wordpress.git
+npm install
+npm run build
 ```
 
-### 2. Copy MU Plugin
+4. Activate the theme from the WordPress admin.
+
+5. On activation, the theme creates or syncs:
+
+- Required pages: `my-notes`, `past-events`, `search`, `login`, `register`
+- The default Primary Menu
+- Rewrite rules
+
+## Data Model
+
+Custom post types are registered in `mu-plugins/custom-post-type.php`:
+
+- `event`
+- `seminar`
+- `professor`
+- `note`
+- `like`
+
+Capabilities are managed in `mu-plugins/theme-capabilities.php`.
+
+Professor fields are handled by a taxonomy:
+
+- Taxonomy: `professor_field`
+- Admin path: `Professors > Fields`
+- Behavior: category-like and hierarchical
+- Edit screen UI: checkbox list on professor edit pages
+
+## ACF Field Groups
+
+ACF field groups are registered in `mu-plugins/acf-fields.php` with `acf_add_local_field_group()`.
+
+These are local PHP field groups. They may not appear as editable database-backed groups under `ACF > Field Groups`, but they are available on the relevant edit screens.
+
+Important fields:
+
+- `event_date` for events
+- `professor_education` and `professor_age` for professors
+- `seminar_professor` for connecting seminars to professors
+- `page_banner_description` and `page_banner_background` for page banners
+
+The old `professor_field` ACF field is deprecated. Professor fields now use the `professor_field` taxonomy.
+
+## Theme Pages
+
+Required page templates:
+
+- `page-login.php`
+- `page-register.php`
+- `page-my-notes.php`
+- `page-past-events.php`
+- `page-search.php`
+
+The custom `/login/` and `/register/` pages are integrated with redirects from `wp-login.php?action=login` and `wp-login.php?action=register`.
+
+Registration respects the WordPress `Anyone can register` setting. If registration is disabled, the custom register form does not create users.
+
+## Theme Settings
+
+The settings page is available here:
 
 ```text
-mu-plugins/custom-post-type.php
+Appearance > Theme Settings
 ```
 
-to:
+It currently manages banner images for:
+
+- Global archives
+- Events archive
+- Seminars archive
+- Professors archive
+
+If no image is configured, the theme falls back to images in `assets/images`:
+
+- `archive.png`
+- `events.png`
+- `seminars.png`
+- `professors.png`
+
+## Frontend
+
+Main JavaScript entry:
 
 ```text
-wp-content/mu-plugins/
+src/index.js
 ```
 
-### 3. Copy Theme
+Important modules:
+
+- `FrontPageExperience.js`: front page hero and sliders using Swiper, GSAP, and Three.js
+- `Search.js`: live search overlay
+- `myNotes.js`: user note management
+- `professorLike.js`: professor likes
+- `MobileMenu.js`: mobile navigation
+- `eventsSlider.js`: legacy past-events slider
+
+Build output is written to `build/` and enqueued from `functions.php`.
+
+## REST API
+
+Custom routes:
 
 ```text
-themes/DevelopTheme
+GET    /wp-json/ataRoute/v1/search?keyword=...
+POST   /wp-json/ataRoute/v1/like
+DELETE /wp-json/ataRoute/v1/like
 ```
 
-to:
+User notes use the native WordPress REST API for the `note` post type. The theme enforces the following with `rest_pre_insert_note` and `wp_insert_post_data` filters:
+
+- The user must be logged in.
+- Users can only edit their own notes.
+- Notes are stored as private posts.
+- Each user is limited to 5 notes.
+
+## File Structure
 
 ```text
-wp-content/themes/
+functions.php                 Main theme bootstrap
+inc/template-helpers.php      Shared helper functions
+inc/theme-activation.php      after_switch_theme orchestration
+inc/page-setup.php            Required page creation
+inc/navigation-setup.php      Default menu creation
+inc/theme-settings.php        Theme settings page
+inc/search_route.php          REST search endpoint
+inc/Likes_route.php           REST like endpoints
+inc/custom-login.php          Login/register routing
+template-part/                Template partials
+src/                          JavaScript and SCSS source
+build/                        Production build output
 ```
 
-### 4. Install Required Plugins
+## Pre-Deploy Checklist
 
-* Advanced Custom Fields (ACF)
+- Disable `WP_DEBUG` on production.
+- Deploy all required `mu-plugins` files.
+- Keep ACF active if admins need to edit custom fields.
+- Run `npm run build` and deploy the `build/` directory.
+- Flush permalinks or ensure rewrite rules have been refreshed.
+- Confirm these pages do not 404: `/login/`, `/register/`, `/my-notes/`, `/past-events/`, `/search/`.
+- Confirm these archives open: `/events/`, `/seminars/`, `/professors/`.
+- Confirm `Professors > Fields` is available in the admin.
+- Test registration with the WordPress `Anyone can register` setting both enabled and disabled.
+- Test note create/update/delete as a normal user.
+- Test professor like/dislike as a normal user.
+- Test the live search overlay and the fallback `/search/` page.
+- Test the front page for console errors.
 
-### 5. Activate Theme
+## Development Commands
 
-WordPress Admin → Appearance → Themes → DevelopTheme
+```bash
+npm run build
+npm run start
+```
 
-### 6. Flush Permalinks
+PHP syntax check:
 
-Settings → Permalinks → Save Changes
+```powershell
+Get-ChildItem -Recurse -Filter *.php | Where-Object { $_.FullName -notlike '*\node_modules\*' } | ForEach-Object { php -l $_.FullName }
+```
 
----
+## Maintenance Notes
 
-## Security Features
-
-* Sanitized note titles
-* Sanitized note content
-* Private note enforcement
-* Like ownership validation
-* Authentication checks for protected actions
-* REST API nonce support
-
----
-
-## Future Improvements
-
-Potential enhancements:
-
-* Custom capabilities for all CPTs
-* Role management UI
-* Event registration system
-* Ticket booking
-* Email notifications
-* AJAX-powered archives
-* PHPUnit tests
-* Composer integration
-* PSR-4 autoloading
-* OOP architecture
-
----
-
-## License
-
-This project is provided for educational and development purposes.
-
-Feel free to modify and extend it according to your requirements.
+- Keep custom post types and capabilities in `mu-plugins`, not in the theme.
+- If a taxonomy or post type changes, bump the relevant internal version and flush rewrite rules once.
+- If the theme needs a new ACF field, register it in `mu-plugins/acf-fields.php`.
+- If the theme needs a new required page, add it to `inc/page-setup.php`.
+- Avoid generic `.swiper` selectors for new sliders. Each slider should have a dedicated class.

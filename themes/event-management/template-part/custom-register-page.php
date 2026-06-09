@@ -14,8 +14,11 @@ em_theme_page_banner('', '', '');
 $show_form = true;
 $errors    = array();
 $success   = false;
+$registration_enabled = (bool) get_option('users_can_register');
 
-if ('POST' === ($_SERVER['REQUEST_METHOD'] ?? '')) {
+if (!$registration_enabled) {
+    $show_form = false;
+} elseif ('POST' === ($_SERVER['REQUEST_METHOD'] ?? '')) {
     if (!isset($_POST['event_management_register_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['event_management_register_nonce'])), 'event_management_register')) {
         $errors[] = __('Security check failed. Please try again.', 'event-management-theme');
     }
@@ -77,6 +80,12 @@ if ('POST' === ($_SERVER['REQUEST_METHOD'] ?? '')) {
                     <?php esc_html_e('Your account has been created successfully. You can now log in.', 'event-management-theme'); ?>
                 </div>
                 <p class="text-center"><a class="btn bg-primary text-white" href="<?php echo esc_url(home_url('/login/')); ?>"><?php esc_html_e('Go to Login', 'event-management-theme'); ?></a></p>
+            <?php endif; ?>
+
+            <?php if (!$registration_enabled) : ?>
+                <div class="alert alert-warning text-center" role="alert">
+                    <?php esc_html_e('Registration is currently closed.', 'event-management-theme'); ?>
+                </div>
             <?php endif; ?>
 
             <?php if ($errors) : ?>
