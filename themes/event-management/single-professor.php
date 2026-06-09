@@ -85,8 +85,8 @@ em_theme_page_banner('', '', '');
         <div class="row">
             <div class="post-information mt-5">
                 <div class="row justify-content-center align-items-center">
-                    <div class="justify-content-center col-9 col-md-3 my-2 d-flex align-items-center">
-                        <span class="bg-info px-4 py-2 text-warning">
+                    <div class="justify-content-center col-9 col-md-4 my-2 d-flex align-items-center">
+                        <span class="bg-info p-2 text-warning">
                             <?php esc_html_e('Seminars:', 'event-management-theme'); ?>
                             <?php if ($professor_seminars->have_posts()) : ?>
                                 <?php while($professor_seminars->have_posts()) : $professor_seminars->the_post(); ?>
@@ -97,13 +97,11 @@ em_theme_page_banner('', '', '');
                             <?php endif; ?>
                         </span>
                     </div>
-                    <div class="col-9 col-md-3 my-2">
+                    <div class="col-9 col-md-4 my-2">
                         <h1 class="post-title text-center"><?php echo esc_html(get_the_title($professor_id)); ?></h1>
                     </div>
-                    <div class="col-12 p-0 col-sm-10 bg-secondary col-md-5 my-2 rounded professor-meta d-flex justify-content-center">
-                        <h4 class="p-2 m-0 border-end"><span class="text-white"><?php esc_html_e('Field:', 'event-management-theme'); ?></span> <?php echo wp_kses_post(em_theme_get_professor_fields($professor_id, true) ?: __('N/A', 'event-management-theme')); ?></h4>
-                        <h4 class="p-2 m-0 border-end"><span class="text-white"><?php esc_html_e('Education:', 'event-management-theme'); ?></span> <?php echo esc_html(em_theme_get_field('professor_education') ?: __('N/A', 'event-management-theme')); ?></h4>
-                        <h4 class="p-2 m-0"><span class="text-white"><?php esc_html_e('Age:', 'event-management-theme'); ?></span> <?php echo esc_html(em_theme_get_field('professor_age') ?: __('N/A', 'event-management-theme')); ?></h4>
+                    <div class="col-12 p-0 col-sm-10 bg-secondary col-md-4 my-2 rounded professor-meta d-flex justify-content-center">
+                        <h4 class="p-2 m-0"><span class="text-white"><?php esc_html_e('Field:', 'event-management-theme'); ?></span> <?php echo wp_kses_post(em_theme_get_professor_fields($professor_id, true) ?: __('N/A', 'event-management-theme')); ?></h4>
                     </div>
                 </div>
             </div>
@@ -125,6 +123,10 @@ em_theme_page_banner('', '', '');
                         </button>
                     </div>
                     <div class="post-thumbnail my-3"><?php echo wp_kses_post(em_theme_post_thumbnail('large')); ?></div>
+                    <div class="professor-details position-relative bg-secondary rounded d-flex justify-content-around align-items-center">
+                      <h4 class="p-2 m-0"><span class="text-white"><?php esc_html_e('Education:', 'event-management-theme'); ?></span> <?php echo esc_html(em_theme_get_field('professor_education') ?: __('N/A', 'event-management-theme')); ?></h4>
+                      <h4 class="p-2 m-0"><span class="text-white"><?php esc_html_e('Age:', 'event-management-theme'); ?></span> <?php echo esc_html(em_theme_get_field('professor_age') ?: __('N/A', 'event-management-theme')); ?></h4>
+                    </div>
                 </aside>
             </div>
         </div>

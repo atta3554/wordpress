@@ -24,6 +24,14 @@ function em_theme_get_required_pages()
             'title'    => __('Search', 'event-management-theme'),
             'template' => 'page-search.php',
         ),
+        'login'       => array(
+            'title'    => __('Login', 'event-management-theme'),
+            'template' => 'page-login.php',
+        ),
+        'register'    => array(
+            'title'    => __('Register', 'event-management-theme'),
+            'template' => 'page-register.php',
+        ),
     );
 }
 

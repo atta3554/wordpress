@@ -22,6 +22,7 @@ function em_theme_redirect_default_login_page()
     }
 
     $action = isset($_GET['action']) ? sanitize_key(wp_unslash($_GET['action'])) : 'login';
+    
     if (!in_array($action, array('login', 'register'), true)) {
         return;
     }

@@ -1,8 +1,4 @@
 <?php
-/*
-Template Name: custom login page
-*/
-
 if (!defined('ABSPATH')) {
     exit;
 }

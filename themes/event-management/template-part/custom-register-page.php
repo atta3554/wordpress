@@ -1,8 +1,4 @@
 <?php
-/*
-Template Name: custom register page
-*/
-
 if (!defined('ABSPATH')) {
     exit;
 }
